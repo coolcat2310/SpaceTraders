@@ -2,6 +2,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "4.4.2"
     id("io.micronaut.aot") version "4.4.2"
+    id("org.openapi.generator") version "7.8.0"
 }
 
 version = "0.1"
@@ -31,6 +32,17 @@ java {
     targetCompatibility = JavaVersion.toVersion("21")
 }
 
+openApiGenerate {
+    generatorName.set("java") // Specify the client language, e.g., java, kotlin, etc.
+    inputSpec.set("$rootDir/src/docs/SpaceTradersApiSpec.yaml") // Path to your OpenAPI spec file
+    outputDir.set("$rootDir/generated") // Output directory for the generated code
+    apiPackage.set("com.github.coolcat2310.api") // Package for the API classes
+    modelPackage.set("com.github.coolcat2310.model") // Package for the model classes
+    invokerPackage.set("com.github.coolcat2310.invoker") // Package for the invoker classes
+    configOptions.set(mapOf(
+        "dateLibrary" to "java8" // Additional configuration options
+    ))
+}
 
 graalvmNative.toolchainDetection = false
 
